@@ -173,11 +173,17 @@ export default function AuthPage({ onLogin }) {
 					lastLogin: new Date().toISOString()
 				});
 
+				// 🔥 Update Firebase Auth profile too
+				await updateProfile(user, {
+					displayName: fullName,
+					photoURL: photoURL || ''
+				});
+
 				setTimeout(() => {
 					toast.success('Account created successfully!', toastConfig);
 				}, 300);
 
-				onLogin(user);
+				onLogin(user); // user now has displayName and photoURL
 			}
 		} catch (error) {
 			const errorInfo = logError(isLogin ? 'Email Login' : 'Email Signup', error);

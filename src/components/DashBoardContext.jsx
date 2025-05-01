@@ -1,10 +1,20 @@
-// DashboardContext.jsx
 import { createContext, useContext, useState } from 'react';
 
 const DashboardContext = createContext(null);
 
-export function DashboardProvider({ children, userInfo, onLogout }) {
+export function DashboardProvider({ children, userInfo = null, onLogout = () => { } }) {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+
+	// Simulate userInfo loading - in a real app, you'd check auth state
+	// or fetch user data, and use this state to show loading indicators
+	useState(() => {
+		// This simulates checking if userInfo is ready
+		const timer = setTimeout(() => {
+			setIsLoading(false);
+		}, 500);
+		return () => clearTimeout(timer);
+	}, [userInfo]);
 
 	const closeSidebar = () => setSidebarOpen(false);
 	const toggleSidebar = () => setSidebarOpen(prev => !prev);
@@ -14,7 +24,8 @@ export function DashboardProvider({ children, userInfo, onLogout }) {
 		onLogout,
 		sidebarOpen,
 		closeSidebar,
-		toggleSidebar
+		toggleSidebar,
+		isLoading
 	};
 
 	return (

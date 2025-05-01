@@ -55,7 +55,7 @@ export default function Header({ toggleSidebar, userInfo }) {
 	return (
 		<header className="w-full">
 			{/* Top Bar */}
-			<div className="bg-[#5C3D00] text-white px-4 md:px-8 py-3 flex justify-between items-center text-sm font-medium">
+			<div className="bg-[#5C3D00] text-white px-4 md:px-8 py-7 flex justify-between items-center text-sm font-medium">
 				<span>Welcome back, {username}</span>
 				<button className="md:hidden" onClick={toggleSidebar}>
 					<HiMenuAlt2 className="text-xl" />
@@ -63,7 +63,7 @@ export default function Header({ toggleSidebar, userInfo }) {
 			</div>
 
 			{/* Alert Bar */}
-			<div className="bg-[#FFE6C9] flex justify-between items-center px-4 md:px-8 py-3 border-b border-[#e6b076]">
+			{/* <div className="bg-[#FFE6C9] flex justify-between items-center px-4 md:px-8 py-3 border-b border-[#e6b076]">
 				<div className="flex items-center gap-2 text-[#3F2600] text-sm font-semibold">
 					<MdRocketLaunch className="text-xl" />
 					<span>LindaSalesPro has an update</span>
@@ -71,7 +71,7 @@ export default function Header({ toggleSidebar, userInfo }) {
 				<button className="cursor-pointer bg-[#FF9900] text-white text-xs px-4 py-1 rounded hover:bg-[#e68400] transition">
 					Download Now
 				</button>
-			</div>
+			</div> */}
 		</header>
 	);
 }

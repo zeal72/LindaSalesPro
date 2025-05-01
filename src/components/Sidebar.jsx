@@ -19,32 +19,34 @@ const menuItems = [
 	{ name: "Settings", icon: <FaCog />, path: "/settings" },
 ];
 
-export default function Sidebar({ isOpen, onClose, userInfo, onLogout }) {
+export default function Sidebar({ isOpen, onClose, userInfo = {}, onLogout }) {
 	const [profileImage, setProfileImage] = useState(null);
 	const [username, setUsername] = useState("Guest");
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
+
 	// Set user data when it changes
 	useEffect(() => {
+		// Safely handle userInfo which might be undefined or null
 		if (userInfo) {
-			// Handle username
-			if (userInfo.username) {
+			// Handle username with optional chaining
+			if (userInfo?.username) {
 				setUsername(userInfo.username);
-			} else if (userInfo.name) {
+			} else if (userInfo?.name) {
 				setUsername(userInfo.name);
-			} else if (userInfo.displayName) {
+			} else if (userInfo?.displayName) {
 				setUsername(userInfo.displayName);
-			} else if (userInfo.email) {
+			} else if (userInfo?.email) {
 				// Use part before @ in email as username if no name is provided
 				setUsername(userInfo.email.split('@')[0]);
+			} else {
+				// Fallback to default if no user identifiers are found
+				setUsername("Guest");
 			}
 
-			// Handle profile image
-			if (userInfo.photoURL) {
-				setProfileImage(userInfo.photoURL);
-			} else {
-				setProfileImage(null);
-			}
+			// Handle profile image with optional chaining
+			setProfileImage(userInfo?.photoURL || null);
 		} else {
+			// Default values when userInfo is undefined or null
 			setUsername("Guest");
 			setProfileImage(null);
 		}
@@ -66,12 +68,12 @@ export default function Sidebar({ isOpen, onClose, userInfo, onLogout }) {
 			} else {
 				// Otherwise use the default Firebase logout
 				await auth.signOut();
-				await new Promise((resolve) => setTimeout(resolve, 2000)); // Add a 1-second timeout
+				await new Promise((resolve) => setTimeout(resolve, 2000)); // Add a 2-second timeout
 				toast.success("Logged out successfully");
 			}
 		} catch (error) {
 			console.error("Logout error:", error);
-			toast.error("Failed to log out: " + error.message);
+			toast.error("Failed to log out: " + (error?.message || "Unknown error"));
 		} finally {
 			setIsLoggingOut(false);
 		}
@@ -86,7 +88,7 @@ export default function Sidebar({ isOpen, onClose, userInfo, onLogout }) {
 	return (
 		<aside
 			className={`fixed top-0 left-0 h-screen z-50 bg-[#FF9900] text-white w-[240px] flex flex-col justify-between transform transition-transform duration-300 ease-in-out
-      ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:flex overflow-y-scroll md:overflow-hidden`}
+      ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:flex overflow-y-scroll lg:overflow-hidden`}
 		>
 			<div className="px-6 pt-6">
 				<h1 className="text-xl font-bold mb-10">LindasalesPro</h1>

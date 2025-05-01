@@ -1,4 +1,3 @@
-// DashboardLayout.jsx
 import { useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
@@ -8,19 +7,24 @@ import { memo } from "react";
 const MemoizedSidebar = memo(Sidebar);
 const MemoizedHeader = memo(Header);
 
-// Internal component that uses the context
+// Internal component that uses the context 
 function DashboardContent({ children }) {
-	const { sidebarOpen, closeSidebar, toggleSidebar, userInfo, onLogout } = useDashboard();
+	const { sidebarOpen, closeSidebar, toggleSidebar, userInfo, onLogout, isLoading } = useDashboard();
 	const location = useLocation();
 
-	// Determine current active page from URL
+	// Determine current active page from URL 
 	const getCurrentPage = () => {
 		const path = location.pathname;
-		// Same as before...
-		return 'Offers'; // Default
+		// Same as before... 
+		return 'Offers'; // Default 
 	};
 
 	const currentPage = getCurrentPage();
+
+	// Optional: You could add a loading spinner while user data is loading
+	// if (isLoading) {
+	//   return <div className="flex items-center justify-center h-screen">Loading user data...</div>;
+	// }
 
 	return (
 		<div className="h-screen flex flex-col md:flex-row">
@@ -48,8 +52,8 @@ function DashboardContent({ children }) {
 	);
 }
 
-// Wrapper component that provides the context
-export default function DashboardLayout({ children, userInfo, onLogout }) {
+// Wrapper component that provides the context 
+export default function DashboardLayout({ children, userInfo = null, onLogout = () => { } }) {
 	return (
 		<DashboardProvider userInfo={userInfo} onLogout={onLogout}>
 			<DashboardContent>{children}</DashboardContent>

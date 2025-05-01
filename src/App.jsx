@@ -8,7 +8,7 @@ import Loader from "./components/Loader";
 import { auth, db } from "./../Firebase.config";
 import { ref, set, get } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
-import OffersPage from "./pages/OffersPage";
+import OffersPage from "././pages/OffersPage";
 import LeadsPage from "./pages/LeadsPage";
 import CustomersPage from "./pages/CustomersPage";
 import LeadGenPage from "./pages/LeadGenPage";
@@ -141,10 +141,10 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-50">
+      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-900 w-[100vw] h-[100vh] overflow-hidden">
         <div className="text-center">
-          <Loader size="large" />
-          <p className="mt-4 text-gray-600">Loading LindasalesPro...</p>
+          <Loader color="#FF9900" size="xl" />
+          <p className="mt-4 text-gray-600 font-medium">Loading LindasalesPro...</p>
         </div>
       </div>
     );

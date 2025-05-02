@@ -8,7 +8,7 @@ import Loader from "./components/Loader";
 import { auth, db } from "./../Firebase.config";
 import { ref, set, get } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
-import OffersPage from "./pages/OffersPage";
+import OffersPage from "./pages/OffersPage"; // Ensure the file name and path match exactly, including case sensitivity
 import LeadsPage from "./pages/LeadsPage";
 import CustomersPage from "./pages/CustomersPage";
 import LeadGenPage from "./pages/LeadGenPage";

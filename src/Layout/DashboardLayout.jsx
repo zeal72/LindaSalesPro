@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import PropTypes from 'prop-types';
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { DashboardProvider, useDashboard } from "../components/DashBoardContext";
@@ -9,22 +10,28 @@ const MemoizedHeader = memo(Header);
 
 // Internal component that uses the context 
 function DashboardContent({ children }) {
-	const { sidebarOpen, closeSidebar, toggleSidebar, userInfo, onLogout, isLoading } = useDashboard();
+	const { sidebarOpen, closeSidebar, toggleSidebar, userInfo, onLogout } = useDashboard();
 	const location = useLocation();
 
 	// Determine current active page from URL 
 	const getCurrentPage = () => {
 		const path = location.pathname;
-		// Same as before... 
+
+		// Map paths to page names
+		if (path === "/") return "Offers";
+		if (path === "/leads") return "Leads";
+		if (path === "/customers") return "Customers";
+		if (path === "/lead-gen") return "Lead Generation";
+		if (path === "/messaging") return "Messaging";
+		if (path === "/appointments") return "Appointments";
+		if (path === "/help") return "Help";
+		if (path === "/sell") return "Sell";
+		if (path === "/settings") return "Settings";
+
 		return 'Offers'; // Default 
 	};
 
 	const currentPage = getCurrentPage();
-
-	// Optional: You could add a loading spinner while user data is loading
-	// if (isLoading) {
-	//   return <div className="flex items-center justify-center h-screen">Loading user data...</div>;
-	// }
 
 	return (
 		<div className="h-screen flex flex-col md:flex-row">
@@ -52,6 +59,11 @@ function DashboardContent({ children }) {
 	);
 }
 
+// Add PropTypes for DashboardContent
+DashboardContent.propTypes = {
+	children: PropTypes.node.isRequired
+};
+
 // Wrapper component that provides the context 
 export default function DashboardLayout({ children, userInfo = null, onLogout = () => { } }) {
 	return (
@@ -60,3 +72,10 @@ export default function DashboardLayout({ children, userInfo = null, onLogout = 
 		</DashboardProvider>
 	);
 }
+
+// Add PropTypes for DashboardLayout
+DashboardLayout.propTypes = {
+	children: PropTypes.node.isRequired,
+	userInfo: PropTypes.object,
+	onLogout: PropTypes.func
+};

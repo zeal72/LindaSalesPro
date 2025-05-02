@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PropTypes from 'prop-types'; // Add this import
 import AuthPage from "./Layout/Auth";
 import DashboardLayout from "./Layout/DashboardLayout";
 import Loader from "./components/Loader";
 import { auth, db } from "./../Firebase.config";
 import { ref, set, get } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
-import OffersPage from "./pages/OffersPage"; // Ensure the file name and path match exactly, including case sensitivity
+// import Offers  from "./pages/offers";
+import Offers from "./pages/offers";
 import LeadsPage from "./pages/LeadsPage";
 import CustomersPage from "./pages/CustomersPage";
 import LeadGenPage from "./pages/LeadGenPage";
@@ -139,6 +141,11 @@ function App() {
     return children;
   };
 
+  // Add PropTypes validation for the ProtectedRoute component
+  ProtectedRoute.propTypes = {
+    children: PropTypes.node.isRequired
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-900 w-[100vw] h-[100vh] overflow-hidden">
@@ -165,7 +172,7 @@ function App() {
           element={
             <ProtectedRoute>
               <DashboardLayout userInfo={userInfo} onLogout={handleLogout}>
-                <OffersPage />
+                <Offers />
               </DashboardLayout>
             </ProtectedRoute>
           }
